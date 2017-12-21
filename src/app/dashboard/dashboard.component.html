@@ -1,9 +1,58 @@
-<h1>{{isAuthenticated}}</h1>
+<div class="row" *ngIf="isAuthenticated">
+  <div class="col-md-4">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col" colspan="2">Organizations</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let org of organizations">
+        <td>
+          {{org.login}}
+        </td>
+        <td>
+          <a (click)="viewOrganizationDetails(org)">Details</a>
+        </td>
+      </tr>
+      </tbody>
 
-<pre *ngIf="isAuthenticated">
-  a home page that:
-  * displays the active user's username/login
-  * allows the user to enter a Github organization
-  * displays a paginated list of public member usernames along with their avatar
-  * displays a paginated list of public repositories along with the star count
-</pre>
+      <tfoot>
+        <tr>
+          <td colspan="2">
+            <a (click)="showMoreOrganizations()">Show more...</a>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="col-md-4" *ngIf="repositories.length > 0">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col" colspan="2">Repositories for {{selectedOrg.login}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let repo of repositories">
+        <td>
+          {{repo.name}}
+        </td>
+        <td>
+          <a (click)="viewOrganizationDetails(repo)">Details</a>
+        </td>
+      </tr>
+      </tbody>
+
+      <tfoot>
+      <tr>
+        <td colspan="2">
+          <a (click)="showMoreRepositories()">Show more...</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
