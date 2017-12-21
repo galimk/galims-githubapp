@@ -54,5 +54,31 @@
       </tfoot>
     </table>
   </div>
+
+  <div class="col-md-4" *ngIf="members.length > 0">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col" colspan="2">Members for {{selectedOrg.login}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let member of members">
+        <td>
+          <img [src]="member.avatar_url"/> {{member.login}}
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2">
+          <a (click)="showMoreMembers()">Show more...</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+
 </div>
 

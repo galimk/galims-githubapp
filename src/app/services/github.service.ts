@@ -70,9 +70,17 @@ export class GithubService {
     return Observable.create(observer => {
       let request = this.http.get(lastSeenId == null ? `${this.baseUri}orgs/${org.login}/repos`
         : `${this.baseUri}orgs/${org.login}/repos?since=${lastSeenId}`);
+      request.subscribe(function (data) {
+        observer.next(data);
+      });
+    });
+  }
 
 
-
+  listMembers(lastSeenId: null, org) {
+    return Observable.create(observer => {
+      let request = this.http.get(lastSeenId == null ? `${this.baseUri}orgs/${org.login}/members`
+        : `${this.baseUri}orgs/${org.login}/members?since=${lastSeenId}`);
       request.subscribe(function (data) {
         console.log(data);
 

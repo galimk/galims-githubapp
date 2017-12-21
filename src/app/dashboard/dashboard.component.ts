@@ -13,6 +13,7 @@ export class DashboardComponent {
 
   public lastSeenOrgId: null;
   public lastSeenRepoId: null;
+  public lastSeenMemberId: null;
 
   public organizations = [];
   public members = [];
@@ -38,6 +39,7 @@ export class DashboardComponent {
     this.organizations = [];
     this.selectedOrg = null;
     this.lastSeenOrgId = null;
+    this.lastSeenMemberId = null;
     this.clearDependentItems();
   }
 
@@ -77,7 +79,15 @@ export class DashboardComponent {
   }
 
   loadMembers() {
+    this.service.listMembers(this.lastSeenMemberId, this.selectedOrg).subscribe((data) => {
+      for (let member of data) {
+        this.members.push(member);
+      }
 
+      if (data.length > 0)
+        this.lastSeenMemberId = data[data.length - 1].id;
+
+    });
   }
 }
 
