@@ -1,0 +1,28 @@
+<div class="col-md-4">
+  <h4>
+   {{config.title}} <span *ngIf="busy">(loading...)</span>
+  </h4>
+  <hr/>
+  <div class="items-container">
+    <table class="table table-striped">
+      <tbody>
+      <tr *ngFor="let item of items">
+        <td *ngIf="listType == 'organizations'">
+          {{item.login}}
+        </td>
+        <td *ngIf="listType == 'organizations'">
+          <a (click)="itemClicked(item)">Details</a>
+        </td>
+      </tr>
+      </tbody>
+
+      <tfoot>
+      <tr>
+        <td colspan="2">
+          <a *ngIf="lastSeenId != null" (click)="loadItems()">Show more...</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

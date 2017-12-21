@@ -13,6 +13,7 @@ export class GithubService {
   token: string;
   $authStatusChange: EventEmitter<any> = new EventEmitter();
 
+
   constructor(private http: HttpClient) {
   }
 
@@ -36,13 +37,11 @@ export class GithubService {
             isSuccess: false
           })
         });
-        }, error => {
-          console.log(error);
-          debugger;
-          observer.next({
-            isSuccess: false
-          })
-        });
+      }, error => {
+        observer.next({
+          isSuccess: false
+        })
+      });
     });
   }
 
@@ -56,34 +55,26 @@ export class GithubService {
   }
 
   listOrganizations(lastSeenId: null) {
-    return Observable.create(observer => {
-      let request = this.http.get(lastSeenId == null ? `${this.baseUri}organizations`
-        : `${this.baseUri}organizations?since=${lastSeenId}`);
-
-      request.subscribe(function (data) {
-        observer.next(data);
-      });
-    });
+    return this.listGithub(this.http.get(lastSeenId == null ?
+      `${this.baseUri}organizations` :
+      `${this.baseUri}organizations?since=${lastSeenId}`));
   }
 
   listRepositories(lastSeenId: null, org) {
-    return Observable.create(observer => {
-      let request = this.http.get(lastSeenId == null ? `${this.baseUri}orgs/${org.login}/repos`
-        : `${this.baseUri}orgs/${org.login}/repos?since=${lastSeenId}`);
-      request.subscribe(function (data) {
-        observer.next(data);
-      });
-    });
+    return this.listGithub(this.http.get(lastSeenId == null ?
+      `${this.baseUri}orgs/${org.login}/repos` :
+      `${this.baseUri}orgs/${org.login}/repos?since=${lastSeenId}`));
   }
 
-
   listMembers(lastSeenId: null, org) {
-    return Observable.create(observer => {
-      let request = this.http.get(lastSeenId == null ? `${this.baseUri}orgs/${org.login}/members`
-        : `${this.baseUri}orgs/${org.login}/members?since=${lastSeenId}`);
-      request.subscribe(function (data) {
-        console.log(data);
+    return this.listGithub(this.http.get(lastSeenId == null ?
+      `${this.baseUri}orgs/${org.login}/members` :
+      `${this.baseUri}orgs/${org.login}/members?since=${lastSeenId}`));
+  }
 
+  listGithub(request) {
+    return Observable.create(observer => {
+      request.subscribe(function (data) {
         observer.next(data);
       });
     });

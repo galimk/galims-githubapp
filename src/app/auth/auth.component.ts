@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { GithubService} from "../services/github.service";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-
+import {Router} from '@angular/router';
 @Component({
   selector: 'auth',
   templateUrl: './auth.component.html',
@@ -15,7 +15,7 @@ export class AuthComponent {
   public login: string = null;
   public errorState: string = null;
 
-  constructor(private service: GithubService) { }
+  constructor(private service: GithubService, private router: Router) { }
 
   public authenticate (authModel) {
     this.service.authenticate(authModel.value.token).subscribe(resp => {
@@ -31,6 +31,7 @@ export class AuthComponent {
   public logOut() {
     this.login = null;
     this.service.logOut();
+    this.router.navigate(['']);
   }
 }
 

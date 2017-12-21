@@ -1,84 +1,25 @@
 <div class="row" *ngIf="isAuthenticated">
-  <div class="col-md-4">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col" colspan="2">Organizations</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let org of organizations">
-        <td>
-          {{org.login}}
-        </td>
-        <td>
-          <a (click)="viewOrganizationDetails(org)">Details</a>
-        </td>
-      </tr>
-      </tbody>
-
-      <tfoot>
-        <tr>
-          <td colspan="2">
-            <a (click)="showMoreOrganizations()">Show more...</a>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+  <div class="row">
+    <div class="col-md-4 search-panel">
+      <h4>Search organization</h4>
+      <div>
+        <div class="form-group left">
+          <input type="organization" class="form-control search-box" id="organization"
+                 placeholder="Organization Name">
+        </div>
+        <button type="submit" class="btn btn-primary search-button">Search</button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="cold-md-8 info-panel" *ngIf="orgName">
+      <h4>Selected Organization: <span class="info-panel-organization">{{orgName}}</span> </h4>
+    </div>
   </div>
+  <div class="row">
+    <github-list [listType]="'organizations'" [itemSelected]="organizationSelected"></github-list>
 
-  <div class="col-md-4" *ngIf="repositories.length > 0">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col" colspan="2">Repositories for {{selectedOrg.login}}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let repo of repositories">
-        <td>
-          {{repo.name}}
-        </td>
-        <td>
-          <a (click)="viewOrganizationDetails(repo)">Details</a>
-        </td>
-      </tr>
-      </tbody>
-
-      <tfoot>
-      <tr>
-        <td colspan="2">
-          <a (click)="showMoreRepositories()">Show more...</a>
-        </td>
-      </tr>
-      </tfoot>
-    </table>
+    <github-list [listType]="'repositories'" *ngIf="orgName"></github-list>
+    <github-list [listType]="'members'" *ngIf="orgName"></github-list>
   </div>
-
-  <div class="col-md-4" *ngIf="members.length > 0">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col" colspan="2">Members for {{selectedOrg.login}}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let member of members">
-        <td>
-          <img [src]="member.avatar_url"/> {{member.login}}
-        </td>
-      </tr>
-      </tbody>
-      <tfoot>
-      <tr>
-        <td colspan="2">
-          <a (click)="showMoreMembers()">Show more...</a>
-        </td>
-      </tr>
-      </tfoot>
-    </table>
-  </div>
-
-
 </div>
 

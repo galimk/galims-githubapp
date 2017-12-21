@@ -5,9 +5,9 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {RepoDetailsComponent} from './repo-details/repo-details.component';
 import {GithubService} from './services/github.service';
 import {RoutingModule} from './app.routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-
+import {GithubListComponent} from './dashboard/github-list/github-list.component';
 import {AppComponent} from './app.component';
 
 
@@ -16,7 +16,8 @@ import {AppComponent} from './app.component';
     AppComponent,
     AuthComponent,
     DashboardComponent,
-    RepoDetailsComponent
+    RepoDetailsComponent,
+    GithubListComponent
   ],
   imports: [
     RoutingModule,

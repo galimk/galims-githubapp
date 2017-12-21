@@ -3,10 +3,10 @@
   <hr/>
   <div class="row">
     <form [formGroup]="authForm" (ngSubmit)="authenticate(authForm)">
+
       <div class="col-md-10">
         <div class="form-group">
-          <input formControlName="token" type="email" class="form-control" id="exampleInputEmail1"
-                 aria-describedby="emailHelp" placeholder="Token">
+          <input formControlName="token" type="text" class="form-control" placeholder="Token">
         </div>
       </div>
       <div class="col-md-2">
@@ -23,17 +23,13 @@
 
 
 <section *ngIf="login != null">
-
   <div class="row">
     <div class="col-md-10">
       <h3>Github user: {{login}}</h3>
-
     </div>
     <div class="col-md-2">
       <button type="button" [disabled]="authForm.invalid" (click)="logOut()" class="btn btn-primary">Logout</button>
     </div>
   </div>
   <hr/>
-
-
 </section>
