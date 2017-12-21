@@ -1,32 +1,4 @@
 <div class="container">
-
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a routerLink="/" >
-              home
-            </a>
-          </li>
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a routerLink="/dashboard" >
-              dash
-            </a>
-          </li>
-
-          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a routerLink="/repo-details" >
-              repo details
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-
+  <auth></auth>
   <router-outlet></router-outlet>
-
 </div>

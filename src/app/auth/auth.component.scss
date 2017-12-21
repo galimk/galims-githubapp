@@ -1,3 +1,13 @@
 pre {
   background: red;
 }
+
+
+button {
+  width: 100%;
+}
+
+
+button[type=button] {
+  margin-top: 15px;
+}
