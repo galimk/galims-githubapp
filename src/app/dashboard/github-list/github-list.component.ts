@@ -13,6 +13,8 @@ export class GithubListComponent implements OnInit {
 
   @Input() itemSelected: (item: any) => void;
 
+  public orgName: string;
+
   public items = [];
 
   public busy: boolean;
@@ -20,10 +22,8 @@ export class GithubListComponent implements OnInit {
   public config: any;
 
   private lastSeenId: number;
-  private selectedOrg: any;
 
   constructor(private service: GithubService) {
-
   }
 
   ngOnInit() {
@@ -36,19 +36,26 @@ export class GithubListComponent implements OnInit {
     }
 
     if (this.config.initLoad) {
-      this.loadItems();
+      this.loadItems(null);
     }
   }
 
-  loadItems() {
+  public loadItems(orgName: string) {
+    this.orgName = orgName;
     this.busy = true;
-    this.config.loader(this.lastSeenId, this.selectedOrg).subscribe((data) => {
+    this.config.loader(this.lastSeenId, this.orgName).subscribe((data) => {
       this.busy = false;
       for (let item of data) {
         this.items.push(item);
       }
       this.lastSeenId = data.length == 30 ? data[data.length - 1].id : null;
     })
+  }
+
+  public clearItems() {
+    this.items = [];
+    this.lastSeenId = null;
+    this.orgName = null;
   }
 
   itemClicked(item) {

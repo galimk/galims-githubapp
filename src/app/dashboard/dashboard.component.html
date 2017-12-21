@@ -1,25 +1,29 @@
 <div class="row" *ngIf="isAuthenticated">
   <div class="row">
     <div class="col-md-4 search-panel">
-      <h4>Search organization</h4>
-      <div>
-        <div class="form-group left">
-          <input type="organization" class="form-control search-box" id="organization"
-                 placeholder="Organization Name">
+      <form [formGroup]="orgSearchForm" (ngSubmit)="searchOrg(orgSearchForm)">
+        <h4>Search organization</h4>
+        <div>
+          <div class="form-group left">
+            <input type="organization" formControlName="orgName" class="form-control search-box" id="organization"
+                   placeholder="Organization Name">
+          </div>
+          <button type="submit" class="btn btn-primary search-button" [disabled]="orgSearchForm.invalid">Search</button>
+          <div class="clearfix"></div>
         </div>
-        <button type="submit" class="btn btn-primary search-button">Search</button>
-        <div class="clearfix"></div>
-      </div>
+        <div *ngIf="notFound">
+          <span class="error">Invalid token. Try again!</span>
+        </div>
+      </form>
     </div>
     <div class="cold-md-8 info-panel" *ngIf="orgName">
-      <h4>Selected Organization: <span class="info-panel-organization">{{orgName}}</span> </h4>
+      <h4>Selected Organization: <span class="info-panel-organization">{{orgName}}</span></h4>
     </div>
   </div>
   <div class="row">
     <github-list [listType]="'organizations'" [itemSelected]="organizationSelected"></github-list>
-
-    <github-list [listType]="'repositories'" *ngIf="orgName"></github-list>
-    <github-list [listType]="'members'" *ngIf="orgName"></github-list>
+    <github-list #repositories [listType]="'repositories'" *ngIf="orgName" [itemSelected]="repoSelected"></github-list>
+    <github-list #members [listType]="'members'" *ngIf="orgName"></github-list>
   </div>
 </div>
 

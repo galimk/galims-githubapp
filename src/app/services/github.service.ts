@@ -15,6 +15,7 @@ export class GithubService {
 
 
   constructor(private http: HttpClient) {
+    this.token = window.localStorage.getItem('token');
   }
 
   authenticate(token: string) {
@@ -30,6 +31,8 @@ export class GithubService {
 
           this.token = token;
           this.$authStatusChange.emit({isLoggedIn: true});
+          window.localStorage.setItem('token', this.token)
+          window.localStorage.setItem('login', userData.login);
 
         }, () => {
           debugger;
@@ -49,9 +52,14 @@ export class GithubService {
     return this.token != null;
   }
 
+  getCurrentLogin() {
+    return window.localStorage.getItem('login');
+  }
+
   logOut() {
     this.token = null;
     this.$authStatusChange.emit({isLoggedIn: false});
+    window.localStorage.removeItem('token');
   }
 
   listOrganizations(lastSeenId: null) {
@@ -60,22 +68,46 @@ export class GithubService {
       `${this.baseUri}organizations?since=${lastSeenId}`));
   }
 
-  listRepositories(lastSeenId: null, org) {
+  listRepositories(lastSeenId: null, orgName) {
     return this.listGithub(this.http.get(lastSeenId == null ?
-      `${this.baseUri}orgs/${org.login}/repos` :
-      `${this.baseUri}orgs/${org.login}/repos?since=${lastSeenId}`));
+      `${this.baseUri}orgs/${orgName}/repos` :
+      `${this.baseUri}orgs/${orgName}/repos?since=${lastSeenId}`));
   }
 
-  listMembers(lastSeenId: null, org) {
+  listMembers(lastSeenId: null, orgName) {
     return this.listGithub(this.http.get(lastSeenId == null ?
-      `${this.baseUri}orgs/${org.login}/members` :
-      `${this.baseUri}orgs/${org.login}/members?since=${lastSeenId}`));
+      `${this.baseUri}orgs/${orgName}/members` :
+      `${this.baseUri}orgs/${orgName}/members?since=${lastSeenId}`));
+  }
+
+  getRepoInfo(owner, repoName) {
+    return this.listGithub(this.http.get(`${this.baseUri}repos/${owner}/${repoName}`));
+  }
+
+  getRepoStargazers(owner, repoName) {
+    return this.listGithub(this.http.get(`${this.baseUri}repos/${owner}/${repoName}/stargazers`));
   }
 
   listGithub(request) {
     return Observable.create(observer => {
       request.subscribe(function (data) {
         observer.next(data);
+      });
+    });
+  }
+
+  getOrganization(org) {
+    return Observable.create(observer => {
+      let request = this.http.get(`${this.baseUri}orgs/${org}`);
+      request.subscribe(function (data) {
+        observer.next({
+          found: true,
+          org: data
+        });
+      }, () => {
+        observer.next({
+          found: false
+        });
       });
     });
   }

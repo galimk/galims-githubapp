@@ -1,7 +1,37 @@
-<pre>
-  a repository detail page that:
-  * includes a back button to return the user to the home page
-  * displays the repository description
-  * displays the issue count
-  * displays the first three stargazers
-</pre>
+<div class="row">
+  <div class="col-md-12">
+    <button value="Back" class="btn btn-default pull-right" type="button" (click)="goBack()">Back</button>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-12">
+
+
+    <h3 class="pull-left">{{name}}</h3>
+    <h3 class="pull-right">Issues Count: ({{issuesCount}})</h3>
+    <div class="clearfix"></div>
+    <hr>
+    <h4>{{description}}</h4>
+
+  </div>
+
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-4">
+    <table class="table table-striped">
+      <thead>
+        <th>Stargazers</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let starGazer of starGazers">
+
+        <td><img [src]="starGazer.avatar_url"> {{starGazer.login}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

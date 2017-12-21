@@ -8,7 +8,7 @@ import { RepoDetailsComponent } from './repo-details/repo-details.component';
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: ':org', component: DashboardComponent },
-  { path: 'repo-details/:repoName', component: RepoDetailsComponent }
+  { path: 'repo-details/:repoName/:ownerName', component: RepoDetailsComponent }
 ];
 
 

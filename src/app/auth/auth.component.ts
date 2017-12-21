@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { GithubService} from "../services/github.service";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent {
+export class AuthComponent implements AfterViewInit{
   public authForm = new FormGroup({
     token: new FormControl('', Validators.required)
   });
@@ -26,6 +26,14 @@ export class AuthComponent {
         this.errorState = 'Invalid Token!';
       }
     });
+  }
+
+  public ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.login == null && this.service.isAuthenticated()) {
+        this.login = this.service.getCurrentLogin();
+      }
+    }, 100);
   }
 
   public logOut() {

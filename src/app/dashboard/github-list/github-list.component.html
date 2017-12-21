@@ -1,16 +1,23 @@
 <div class="col-md-4">
   <h4>
-   {{config.title}} <span *ngIf="busy">(loading...)</span>
+   {{config.title}} <span *ngIf="busy">(loading...)</span> {{orgName}}
   </h4>
   <hr/>
   <div class="items-container">
     <table class="table table-striped">
       <tbody>
       <tr *ngFor="let item of items">
+
+        <td *ngIf="listType == 'members'">
+          <img [src]="item.avatar_url"> {{item.login}}
+        </td>
         <td *ngIf="listType == 'organizations'">
           {{item.login}}
         </td>
-        <td *ngIf="listType == 'organizations'">
+        <td *ngIf="listType == 'repositories'">
+          {{item.name}} ({{item.stargazers_count}} stars)
+        </td>
+        <td *ngIf="listType == 'organizations' || listType == 'repositories'">
           <a (click)="itemClicked(item)">Details</a>
         </td>
       </tr>
