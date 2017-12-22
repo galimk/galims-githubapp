@@ -17,7 +17,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
 
   public routerSub: any;
 
-  public notFound: false;
+  public notFound: boolean;
 
   @ViewChild('repositories')
   public repositories: GithubListComponent;
