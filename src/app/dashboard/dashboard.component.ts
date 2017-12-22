@@ -42,7 +42,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   setIsAuthenticatedChanged(isAuthenticated) {
     this.isAuthenticated = isAuthenticated;
     if (isAuthenticated) {
-      // timeout because after components become initialized, they are not yet bound through viewChild
+      // this timeout to account for when components get initialized and they are not yet bound through viewChild
       setTimeout(() => {
         if (this.orgName != null)
           this.loadMembersAndRepos();
@@ -74,10 +74,10 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.routerSub = this.activatedRoute.params.subscribe(params => {
       setTimeout(() => {
-        // this timeout to avoid angular exception. Did not have to research enough, why it is happening.
+        // this timeout to avoid angular exception. Did not have enough to research enough, why it is happening.
         this.orgName = params['org'];
         setTimeout(() => {
-          // this timeout because after components become initialized, they are not yet bound through viewChild
+          // this timeout to account for when components get initialized and they are not yet bound through viewChild
           this.loadMembersAndRepos();
         }, 100);
       }, 100);
