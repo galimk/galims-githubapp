@@ -41,7 +41,8 @@ export class GithubListComponent implements OnInit {
   }
 
   public loadItems(orgName: string) {
-    this.orgName = orgName;
+    if (orgName != null)
+      this.orgName = orgName;
     this.busy = true;
     this.config.loader(this.lastSeenId, this.orgName).subscribe((data) => {
       this.busy = false;
