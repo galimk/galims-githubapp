@@ -74,7 +74,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.routerSub = this.activatedRoute.params.subscribe(params => {
       setTimeout(() => {
-        // this timeout to avoid angular exception. Did not have enough to research enough, why it is happening.
+        // this timeout to avoid angular exception. Did not have enough time to research enough, why it is happening.
         this.orgName = params['org'];
         setTimeout(() => {
           // this timeout to account for when components get initialized and they are not yet bound through viewChild
