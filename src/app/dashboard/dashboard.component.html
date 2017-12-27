@@ -21,9 +21,9 @@
     </div>
   </div>
   <div class="row">
-    <github-list [listType]="'organizations'" [itemSelected]="organizationSelected"></github-list>
-    <github-list #repositories [listType]="'repositories'" *ngIf="orgName" [itemSelected]="repoSelected"></github-list>
-    <github-list #members [listType]="'members'" *ngIf="orgName"></github-list>
+    <github-list [listType]="'organizations'"  [itemSelected]="organizationSelected"></github-list>
+    <github-list #repositories [listType]="'repositories'" [byPage]="true" *ngIf="orgName" [itemSelected]="repoSelected"></github-list>
+    <github-list #members [listType]="'members'" [byPage]="true" *ngIf="orgName"></github-list>
   </div>
 </div>
 

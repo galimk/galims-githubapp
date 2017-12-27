@@ -15,6 +15,8 @@ export class GithubListComponent implements OnInit {
 
   public orgName: string;
 
+  @Input() public byPage: boolean = false;
+
   public items = [];
 
   public busy: boolean;
@@ -22,6 +24,9 @@ export class GithubListComponent implements OnInit {
   public config: any;
 
   private lastSeenId: number;
+
+  // repos & members apperantly paged differently, not trough lastSeenId, but by page.
+  private lastPage: number = 1;
 
   constructor(private service: GithubService) {
   }
@@ -43,19 +48,30 @@ export class GithubListComponent implements OnInit {
   public loadItems(orgName: string) {
     if (orgName != null)
       this.orgName = orgName;
+
+
     this.busy = true;
-    this.config.loader(this.lastSeenId, this.orgName).subscribe((data) => {
+
+
+    this.config.loader(this.byPage ? this.lastPage : this.lastSeenId, this.orgName).subscribe((data) => {
       this.busy = false;
+
       for (let item of data) {
         this.items.push(item);
       }
+
       this.lastSeenId = data.length == 30 ? data[data.length - 1].id : null;
+
+      if (data.length == 30) {
+        this.lastPage++;
+      }
     })
   }
 
   public clearItems() {
     this.items = [];
     this.lastSeenId = null;
+    this.lastPage = 1;
     this.orgName = null;
   }
 

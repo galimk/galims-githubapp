@@ -68,16 +68,16 @@ export class GithubService {
       `${this.baseUri}organizations?since=${lastSeenId}`));
   }
 
-  listRepositories(lastSeenId: null, orgName) {
-    return this.listGithub(this.http.get(lastSeenId == null ?
+  listRepositories(page: number, orgName) {
+    return this.listGithub(this.http.get(page == null ?
       `${this.baseUri}orgs/${orgName}/repos` :
-      `${this.baseUri}orgs/${orgName}/repos?since=${lastSeenId}`));
+      `${this.baseUri}orgs/${orgName}/repos?page=${page}`));
   }
 
-  listMembers(lastSeenId: null, orgName) {
-    return this.listGithub(this.http.get(lastSeenId == null ?
+  listMembers(page: number, orgName) {
+    return this.listGithub(this.http.get(page == null ?
       `${this.baseUri}orgs/${orgName}/members` :
-      `${this.baseUri}orgs/${orgName}/members?since=${lastSeenId}`));
+      `${this.baseUri}orgs/${orgName}/members?page=${page}`));
   }
 
   getRepoInfo(owner, repoName) {
